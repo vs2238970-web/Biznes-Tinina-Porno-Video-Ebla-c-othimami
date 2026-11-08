@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Захар Тунин — досье</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(230,57,70,.25), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(0,200,255,.20), transparent 45%),
+      #0a0a0f;
+    color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 16px;
+    overflow-x: hidden;
+  }
+
+  /* плавающие частицы на фоне */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    background-image:
+      radial-gradient(#e63946 1px, transparent 1px),
+      radial-gradient(#00c8ff 1px, transparent 1px);
+    background-size: 90px 90px, 140px 140px;
+    background-position: 0 0, 40px 60px;
+    opacity: .12;
+    animation: drift 60s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes drift {
+    to { transform: translate(140px, 90px); }
+  }
+
+  .card {
+    position: relative;
+    max-width: 680px;
+    width: 100%;
+    padding: 40px 32px;
+    border-radius: 20px;
+    background: rgba(20, 20, 28, .85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow:
+      0 0 0 1px rgba(230,57,70,.15),
+      0 20px 60px rgba(0,0,0,.7),
+      inset 0 1px 0 rgba(255,255,255,.06);
+    animation: rise .8s cubic-bezier(.2,.9,.3,1.2) both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(30px) scale(.97); }
+  }
+
+  /* неоновая полоса сверху */
+  .card::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e63946, #00c8ff, transparent);
+    filter: blur(.5px);
+    border-radius: 2px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #00c8ff;
+    border: 1px solid rgba(0,200,255,.4);
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    background: rgba(0,200,255,.06);
+  }
+
+  h1 {
+    position: relative;
+    font-size: clamp(20px, 4.2vw, 27px);
+    line-height: 1.3;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    margin-bottom: 32px;
+    color: #fff;
+    text-shadow: 0 0 24px rgba(230,57,70,.45);
+  }
+
+  /* глитч на заголовке */
+  h1::before, h1::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%;
+    overflow: hidden;
+    opacity: .75;
+    pointer-events: none;
+  }
+  h1::before {
+    color: #e63946;
+    animation: glitch1 3.5s infinite steps(2, end);
+  }
+  h1::after {
+    color: #00c8ff;
+    animation: glitch2 2.8s infinite steps(2, end);
+  }
+  @keyframes glitch1 {
+    0%, 92%, 100% { transform: none; clip-path: inset(0 0 100% 0); }
+    93% { transform: translate(-2px, -1px); clip-path: inset(10% 0 55% 0); }
+    95% { transform: translate(2px, 1px); clip-path: inset(60% 0 20% 0); }
+  }
+  @keyframes glitch2 {
+    0%, 88%, 100% { transform: none; clip-path: inset(0 0 100% 0); }
+    89% { transform: translate(2px, 1px); clip-path: inset(30% 0 40% 0); }
+    91% { transform: translate(-2px, -1px); clip-path: inset(70% 0 10% 0); }
+  }
+
+  .field {
+    margin-bottom: 22px;
+    padding-left: 16px;
+    border-left: 2px solid rgba(230,57,70,.5);
+    transition: border-color .25s, transform .25s;
+  }
+  .field:hover {
+    border-color: #e63946;
+    transform: translateX(3px);
+  }
+  .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: #7a7a8a;
+    margin-bottom: 5px;
+  }
+  .value {
+    font-size: 17px;
+    color: #fff;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .photos-title {
+    margin: 36px 0 16px;
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #7a7a8a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .photos-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,255,255,.15), transparent);
+  }
+
+  .photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+  }
+  .photos figure {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.1);
+    aspect-ratio: 4 / 3;
+    background: #000;
+    transition: transform .3s cubic-bezier(.2,.9,.3,1.4), box-shadow .3s;
+  }
+  .photos figure:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(230,57,70,.35);
+    z-index: 1;
+  }
+  .photos img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s;
+  }
+  .photos figure:hover img { transform: scale(1.08); }
+  .photos figure::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, transparent 55%, rgba(230,57,70,.35));
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <span class="badge">Досье · конфиденциально</span>
+
+    <h1 data-text="Съёмки гей порна с тунином и его отцами">
+      Съёмки гей порна с тунином и его отцами
+    </h1>
+
+    <div class="field">
+      <div class="label">Данные предпринимателя</div>
+      <div class="value">Фамилия, имя: Захар Тунин</div>
+    </div>
+
+    <div class="field">
+      <div class="label">Адрес бизнеса</div>
+      <div class="value">Новотамбовская 39 А, подъезд 1, квартира 1</div>
+    </div>
+
+    <div class="photos-title">Фото бизнеса</div>
+    <div class="photos">
+      <figure><img src="foto1.png" alt="Фото бизнеса 1"></figure>
+      <figure><img src="foto2.png" alt="Фото бизнеса 2"></figure>
+      <figure><img src="foto3.png" alt="Фото бизнеса 3"></figure>
+    </div>
+  </main>
+</body>
+</html>
